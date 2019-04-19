@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Color Changer</title>
+    <style>
+        button {
+            padding: 15px;
+            margin-left: 10px;
+        }
+
+        div {
+            text-align: center;
+            line-height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="list-btn">
+        <button id="red">RED</button>
+        <button id="green">GREEN</button>
+        <button id="blue">BLUE</button>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        listButton = document.getElementById('list-btn');
+        listButton.addEventListener('click', onClicked);
+
+        function onClicked(event) {
+            let color = event.target.id;
+            socket.emit('background color', color)
+        }
+
+        socket.on('background color', function(color) {
+            document.body.style.background = color;
+        });
+    </script>
+</body>
+
+</html>
